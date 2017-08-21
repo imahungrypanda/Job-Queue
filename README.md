@@ -7,10 +7,9 @@ User submits www.google.com to your endpoint. The user gets back a job id. Your 
 
 
 Job Queue
-
 - Fetch data from a URL (data being the HTML that the page returns)
 - Store result in a database
 
 Api Endpoints
-POST job
-GET status
+- POST job
+- GET status
