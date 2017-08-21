@@ -30,16 +30,7 @@ Promise.resolve()
 });
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Return index of job queues?');
-});
+// NOTE: Consider '/' route to return the readme
+app.use(require('./routes'));
 
-app.post('/', (req, res) =>{
-  console.log('create database entry');
-  console.log('start request to get HTML');
-  res.status(200).send({})
-});
-
-app.get('*', (req, res) =>
-  res.status(404).send({ message: 'Route does not exist' })
-);
+module.export = app;
