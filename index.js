@@ -15,7 +15,7 @@ Promise.resolve()
       }
       console.log('Database connected');
 
-      let requestSchema = mongoose.Schema({
+      let requestSchema = new mongoose.Schema({
         request_url: String,
         request_html: String
       });
