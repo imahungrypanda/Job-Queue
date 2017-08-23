@@ -1,15 +1,51 @@
-Create a job queue whose workers fetch data from a URL and store the results in a database. The job queue should expose a REST API for adding jobs and checking their status / results.
-
 # Job Queue
- *Description*
 
- ### Example
+ Job Queue is a simple node api that fetches HTML from a requested URL.
+
+### Setup
+
+Requirements:
+- MongoDB [installation guide](https://treehouse.github.io/installation-guides/)
+- Node
+
+
+1. Run `npm install`
+2. Start MongoDB
+3. Running `npm run start` starts the server
+
+
+### Example
 
  User submits www.google.com to your endpoint. The user gets back a job id. Your system fetches www.google.com (the result of which would be HTML) and stores the result. The user asks for the status of the job id and if the job is complete, he gets a response that includes the HTML for www.google.com
 
+ **Request Example**
+
+ POST api/request?url=www.google.com
+
+ **Response Example**
+ ```JSON
+  {
+    "id": "599df002a0746149b07c3508"
+  }
+ ```
+
+ **Request Example**
+
+ GET /api/599df002a0746149b07c3508
+
+ **Response Example**
+ ```JSON
+  {
+    "id": "599df002a0746149b07c3508",
+    "url": "www.google.com",
+    "status": "Complete",
+    "html": "<!doctype html><html....."
+  }
+ ```
+
 ### Job Queue Features
-- Fetch data from a URL (data being the HTML that the page returns)
-- Store result in a database
+- [x] Fetch data from a URL (data being the HTML that the page returns)
+- [x] Store result in a database
 
 ### API Endpoints
 

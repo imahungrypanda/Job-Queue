@@ -15,7 +15,7 @@ router.get('/:id', (req, res) => {
 console.log(job);
     res.json({
       id: job.id,
-      request_url: job.request_url,
+      url: job.request_url,
       status: job.status,
       html: job.response_html
     });
