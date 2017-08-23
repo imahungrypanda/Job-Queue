@@ -1,6 +1,6 @@
 # Job Queue
 
- Job Queue is a simple node api that fetches HTML from a requested URL.
+ Job Queue is a simple Node API that fetches HTML from a requested URL.
 
 ### Setup
 
@@ -8,7 +8,7 @@ Requirements:
 - MongoDB [installation guide](https://treehouse.github.io/installation-guides/)
 - Node
 
-
+Getting Started:
 1. Run `npm install`
 2. Start MongoDB
 3. Running `npm run start` starts the server
@@ -16,7 +16,7 @@ Requirements:
 
 ### Example
 
- User submits www.google.com to your endpoint. The user gets back a job id. Your system fetches www.google.com (the result of which would be HTML) and stores the result. The user asks for the status of the job id and if the job is complete, he gets a response that includes the HTML for www.google.com
+User submits www.google.com to the endpoint. The user gets back a job `id`. Your system fetches www.google.com and stores the result, which will be HTML. The user asks for the status of the job `id`, and if the job is complete, the user gets a response that includes the HTML for www.google.com.
 
  **Request Example**
 
