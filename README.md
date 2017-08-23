@@ -26,3 +26,4 @@ Table: jobs
 | ID             | Id of the job       |
 | request_url    | Stores the URL that was sent to the API |
 | response_html  | Response from the URL |
+| status         | Shows the current status of the request and if an error occurred |

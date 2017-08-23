@@ -16,8 +16,9 @@ Promise.resolve()
       console.log('Database connected');
 
       let requestSchema = new mongoose.Schema({
-        request_url: String,
-        request_html: String
+        request_url:   String,
+        response_html: String,
+        status:        String
       });
 
       module.exports = mongoose.model('Request', requestSchema);
