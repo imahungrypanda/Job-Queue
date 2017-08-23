@@ -1,7 +1,6 @@
 const express = require('express'),
       app = express(),
-      fs = require('fs'),
-      { exec } = require('child_process');
+      mongoose = require('mongoose');
 
 const { PORT = 3000, NODE_ENV = 'development', DB = './db/database.db'} = process.env;
 
@@ -9,18 +8,20 @@ const { PORT = 3000, NODE_ENV = 'development', DB = './db/database.db'} = proces
 Promise.resolve()
   // Create database
   .then(() => {
-    if (!fs.existsSync(DB)) {
-      exec(`cat db/create_database.sql | sqlite3 ${DB}`, (error) => {
-        if (error) {
-          console.error(`exec error: ${error}`);
-          return;
-        }
-        console.log('Database created');
+    mongoose.connect('mongodb://localhost/test', { useMongoClient: true }, err => {
+      if (err) {
+        console.error.bind(console, 'connection error:');
+        return;
+      }
+      console.log('Database connected');
+
+      let requestSchema = new mongoose.Schema({
+        request_url: String,
+        request_html: String
       });
-    }
-    else {
-      console.log('Database already exists');
-    }
+
+      module.exports = mongoose.model('Request', requestSchema);
+    });
   })
   .then(() => app.listen(PORT, () =>
     console.log(`Server listening at http://localhost:${PORT}`)

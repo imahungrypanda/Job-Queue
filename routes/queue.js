@@ -1,4 +1,6 @@
 const router = require('express').Router();
+      // sqlite = require('sqlite');
+
 
 // Job Status
 router.get('/:id', (req, res) => {
@@ -8,9 +10,19 @@ router.get('/:id', (req, res) => {
 
 // Create job
 router.post('/request', (req, res) => {
-  console.log('create database entry');
-  console.log('start request to get HTML');
-  res.json({});
+  let url = req.params.url;
+  // console.log(sqlite);
+  // let insert = sqlite.prepare('INSERT INTO jobs(request_url) VALUES(?)');
+
+  // sqlite.run(`INSERT INTO jobs(request_url) VALUES(?);`, url).then(db => {
+  // sqlite.prepare('INSERT INTO jobs(request_url) VALUES(?)').run(url).finalize().then(db => {
+
+    // console.log(db);
+
+    console.log('create database entry');
+    console.log('start request to get HTML');
+    res.json({ test: "something goes here" });
+  // });
 });
 
 module.exports = router;
