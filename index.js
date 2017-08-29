@@ -1,5 +1,5 @@
-const express = require('express'),
-      app = express(),
+const express  = require('express'),
+      app      = express(),
       mongoose = require('mongoose');
 
 const { PORT = 3000, NODE_ENV = 'development', DB = './db/database.db'} = process.env;

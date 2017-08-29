@@ -1,9 +1,29 @@
 const router   = require('express').Router(),
       mongoose = require('mongoose')
       request  = require('request'),
-      URL = require('url');
+      http     = require('http'),
+      queue = require('async').queue(function(task, callback) {
+        console.log('Job queued');
 
-      const http = require('http');
+        http.get({ host: task.url }, function(res) {
+          let response_html = '';
+
+          res.on('data', function(data) {
+            response_html += data.toString();
+          });
+
+          res.on('end', () => {
+            callback(response_html);
+          });
+        })
+        .on('error', (e) => {
+          console.log("Got error: " + e.message);
+        });
+      }, 10);;
+
+queue.drain = function() {
+  console.log('Queue has finised processing!');
+}
 
 // Job Status
 router.get('/:id', (req, res) => {
@@ -12,7 +32,7 @@ router.get('/:id', (req, res) => {
 
   Request.findById(req.params.id, (err, job) => {
     if (err) res.status(500).json({ message: error });
-console.log(job);
+
     res.json({
       id: job.id,
       url: job.request_url,
@@ -28,25 +48,16 @@ router.post('/request', (req, res) => {
       Request = mongoose.model('Request'),
       job = new Request({ request_url: url, status: 'In progress' });
 
-  job.save((err, job) => {
+  job.save((err) => {
     if (err) res.status(500).json({ message: error });
+    queue.push({ url, id: job.id }, (response_html) => {
+      Request.update({ _id: job.id }, { response_html: response_html, status: 'Complete' }, (err) => {
+        if (err) {
+          console.log('ERROR: ', err) }
+        });
+    });
     res.json({ id: job.id });
-
-  http.get({ host: url }, function(res) {
-    let response_html = '';
-
-    res.on('data', function(data) {
-      response_html += data.toString();
-    });
-
-    res.on('end', () => {
-      Request.update({ _id: job.id }, { response_html: response_html, status: 'Complete' }, (err) => console.log('Updated: ', err));
-    });
-  })
-  .on('error', function(e) {
-    console.log("Got error: " + e.message);
   });
-});
 });
 
 module.exports = router;
