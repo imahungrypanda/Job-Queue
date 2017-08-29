@@ -19,7 +19,7 @@ const router   = require('express').Router(),
         .on('error', (e) => {
           console.log("Got error: " + e.message);
         });
-      }, 10);;
+      }, 10);
 
 queue.drain = function() {
   console.log('Queue has finised processing!');

@@ -47,6 +47,31 @@ User submits www.google.com to the endpoint. The user gets back a job `id`. Your
 - [x] Fetch data from a URL (data being the HTML that the page returns)
 - [x] Store result in a database
 
+### Implementation
+
+When tasks are added the the queue it adds it starts the process of fetching the data from the URL. Once all the data has been gathered the callback function is called and passed the data so that it can be saved to the database. 
+
+```javascript
+queue = require('async').queue(function(task, callback) {
+  console.log('Job queued');
+
+  http.get({ host: task.url }, function(res) {
+    let response_html = '';
+
+    res.on('data', function(data) {
+      response_html += data.toString();
+    });
+
+    res.on('end', () => {
+      callback(response_html);
+    });
+  })
+  .on('error', (e) => {
+    console.log("Got error: " + e.message);
+  });
+}, 10);
+```
+
 ### API Endpoints
 
 | Route          | Description    |
