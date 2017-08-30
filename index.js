@@ -1,8 +1,8 @@
-const express  = require('express'),
-      app      = express(),
-      mongoose = require('mongoose');
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
 
-const { PORT = 3000, NODE_ENV = 'development', DB = './db/database.db'} = process.env;
+const { PORT = 3000, NODE_ENV = 'development' } = process.env;
 
 // Start Server
 Promise.resolve()
@@ -16,9 +16,9 @@ Promise.resolve()
       console.log('Database connected');
 
       let requestSchema = new mongoose.Schema({
-        request_url:   String,
+        request_url: String,
         response_html: String,
-        status:        String
+        status: String
       });
 
       module.exports = mongoose.model('Request', requestSchema);
@@ -29,7 +29,7 @@ Promise.resolve()
   ))
   .catch(err => {
     if (NODE_ENV === 'development') console.error(err.stack);
-});
+  });
 
 // Routes
 // NOTE: Consider '/' route to return the readme
